@@ -1,0 +1,75 @@
+{% extends "src/superAdminBasefile.html" %} {% block content %}
+<br><br>
+<script>
+    var d="{{day}}";
+    var dv="{{dayVisitor}}";
+    var i;
+    var djangoData = JSON.parse('{{graphData|safe}}');
+    window.onload = function () {
+        
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        
+        title:{
+            text:"Number of Visitors of Last 10 days"
+        },
+        axisX:{
+            interval: 1
+        },
+        axisY2:{
+            interval:1,
+            interlacedColor: "rgba(1,77,101,.2)",
+            gridColor: "rgba(1,77,101,.1)",
+            title: "Number of Visitors"
+        },
+        data: [{
+            type: "bar",
+            name: "companies",
+            axisYType: "secondary",
+            color: "#014D65",
+            dataPoints: djangoData
+        }]
+    });
+    chart.render();
+    
+    }
+    </script>
+    
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<br><br>
+<h3 style="color: white;">Yearly Number of Visitors</h3>
+    <br>
+
+          <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+          <script type='text/javascript'>
+            var djangoData2 = JSON.parse('{{yearData|safe}}');
+            var len=JSON.parse('{{len|safe}}');
+            var dj2=djangoData2;
+            var i;
+            for(i=0;i<len;i++){
+                dj2[i][0]= new Date(djangoData2[i][0]);
+            }
+            google.charts.load('current', {'packages':['annotatedtimeline']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = new google.visualization.DataTable();
+              data.addColumn('date', 'Date');
+              data.addColumn('number', 'Sold Pencils');
+
+              data.addRows(dj2);
+      
+              var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+              chart.draw(data, {displayAnnotations: true});
+            }
+          </script>
+
+          <div id='chart_div' style="height: 300px; width: 100%;"></div>
+    
+          <br>
+          <br>
+          <br>
+          <br>
+
+{% endblock %}

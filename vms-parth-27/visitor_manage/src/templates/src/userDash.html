@@ -1,0 +1,181 @@
+<html>
+
+<head>
+  {% load static %}
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/toastr.css' %}" media="all">
+  <script type="text/javascript" src="{% static 'js/toastr.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static '/css/adminDelete.css' %}" />
+  <link rel="stylesheet" href="{% static '/css/nav.css' %}" />
+  <link rel="stylesheet" href="{% static '/css/userDash.css' %}" />
+  <link rel="stylesheet" href="{% static '/css/Delete.css' %}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+<body">
+  <div class="vertical-nav bg-white" id="sidebar">
+    <div class="py-4 px-3 mb-4" style="background-color: black;">
+      <div class="media d-flex align-items-center">
+        <img src="{{ user_admin_obj.photo.url }}" width="100" class="mr-3 rounded-circle img-thumbnail shadow-sm" />
+        <div class="media-body">
+          <h4 class="m-0" style="color: white;">{{username}}</h4>
+          <p class="font-weight-light text-muted mb-0">
+          <h6 style="color: white;">School of Engineering and Applied Science</h6>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">
+      Main
+    </p>
+
+    <ul class="nav flex-column bg-white mb-0">
+      <li class="nav-item">
+        <a href="{% url 'userLogin' %}" class="nav-link text-dark font-italic">
+          <i class="fa fa-cubes mr-3 text-primary fa-fw">
+            <img src="https://img.icons8.com/ios-glyphs/2x/user-group-man-man.png" width="30" />
+          </i>
+          Login as Other User
+        </a>
+      </li>
+
+
+      <li class="nav-item">
+        <a href="{% url 'imageUpload' %}" class="nav-link text-dark font-italic">
+          <i class="fa fa-picture-o mr-3 text-primary fa-fw">
+            <img src="https://img.icons8.com/ios-glyphs/2x/image.png" width="30" />
+          </i>
+          Gallery
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'faq' %}" class="nav-link text-dark font-italic">
+          <i class="fa fa-picture-o mr-3 text-primary fa-fw">
+            <img src="https://img.icons8.com/ios-filled/2x/faq.png" width="30" />
+          </i>
+          FAQ
+        </a>
+      </li>
+
+
+      <!-- <li class="nav-item">
+        <a href="{% url 'map' %}" class="nav-link text-dark font-italic">
+          <i class="fa fa-picture-o mr-3 text-primary fa-fw">
+            <img src="https://img.icons8.com/ios-glyphs/2x/gps-device.png" width="30" />
+          </i>
+          MAP
+        </a>
+      </li> -->
+
+      <li class="nav-item">
+        <a href="{% url 'userLogoutDone' %}" class="nav-link text-dark font-italic">
+          <i class="fa fa-picture-o mr-3 text-primary fa-fw">
+            <img src="https://img.icons8.com/android/2x/logout-rounded-left.png" width="30" />
+          </i>
+          Logout
+        </a>
+
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="page-content p-5" id="content">
+    <button id="sidebarCollapse" type="button" style="background-color:white;">
+      <i class="fa fa-bars mr-2">
+        <img src="https://img.icons8.com/ios-glyphs/2x/sorting-options.png" width="30" height="30" />
+      </i>
+    </button>
+    <h3>{{timeDue}}<br></h3>
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        {% if obj == 1 %}
+
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success'%}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'info' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'warning' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% elif message.tags == 'error' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-center">
+              <h3 class="clg">Ahmedabad University</h3>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <img src="{{ user_admin_obj.photo.url }}" width="100" height="100" /><br />
+            </div>
+            <div class="d-flex justify-content-center">
+              <h3>{{user_admin_obj.name}}</h3>
+            </div>
+            <div class="d-flex justify-content-center">
+              Gender: {{user_admin_obj.gender}}<br />
+              Date Of Visit: {{visiter_obj.visitDate}}<br />
+              Reason of visit: {{visiter_obj.reason}}<br />
+              Time validity: {{visiter_obj.visiting_hour}} Hour<br />
+              Gate Number: {{visiter_obj.gateId}} <br />
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <br>
+              <div class="form-group">
+                <button value="Delete" class="btn float-right login_btn" id="lg_bt">
+                  <a href="/gatepassDelete/{{visiter_obj.pk}}" style="color: black;">Delete
+                  <img src="https://img.icons8.com/ios/2x/delete-trash.png" width="30" /></a>
+                </button>
+              </div>
+
+              <!-- <button style="background-color: white;">
+                <a href="/gatepassDelete/{{visiter_obj.pk}}">Delete
+                  <img src="https://img.icons8.com/ios/2x/delete-trash.png" width="30" /></a>
+              </button> -->
+            </div>
+            <hr>
+            <hr>
+            <div class="d-flex justify-content-center" style="background-color: black;">
+              <h1>Visitor</h1>
+            </div>
+
+          </div>
+        </div>
+        {% else %}
+        <div id="createPass">
+          <h2 id="head">Visitor Pass</h2>
+          <h4>You don't have any gate pass... want to <a href="gatepass">create One ??</a></h4>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+      // Sidebar toggle behavior
+      $("#sidebarCollapse").on("click", function () {
+        $("#sidebar, #content").toggleClass("active");
+      });
+    });
+  </script>
+  </body>
+
+</html>
